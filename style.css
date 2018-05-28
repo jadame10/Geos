@@ -1,0 +1,59 @@
+*{
+
+box-sizing:  border-box;
+}
+
+.guessing{
+  width: 300px;
+  height: 50px;
+  border:3px solid blue;
+  color: black;
+  font-size: 18px;
+  padding: 0.5%;
+}
+
+.geoContent{
+  width: 300px;
+  height: 50px;
+  border:3px solid green;
+  font-size: 20px;
+
+  font-weight: 900;
+}
+legend{
+font-size: 18px;
+font-weight: 600;
+}
+input.guess{
+  width: 300px;
+  height: 50px;
+  border:3px solid red;
+  font-size: 20px;
+  padding: 0.5% 0;
+
+}
+.btnz{
+  width: 150px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: top;
+
+}
+.btnr{
+  width: 300px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: top;
+}
+.score{
+  width: 450px;
+  height: 50px;
+  float: right;
+  font-size: 20px;
+}
+#map{
+  border:2px solid blue;
+  width: 1000px !important;
+  height: 600px !important;
+  margin-bottom: 5%;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta	name="viewport"	content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel = stylesheet href = style.css />
+  <link href = bootstrap.min.css rel = stylesheet />
+  <title>Geos</title>
+
+</head>
+
+
+<body>
+
+      <div class = body>
+
+        <div class="container-fluid">
+              	<div class="row">
+              		<div class="col-md-1">
+              		</div>
+              		<div class="col-md-10">
+
+                    <h1> Game - guess what country is this city situated in ? Write Your answers in English. </h1>
+
+                    <form>
+
+                    <fieldset>
+
+                    <legend>
+                      Write Your's answers here
+                    </legend>
+
+                    <label>
+
+                      <input type="text" class = guess />
+
+                    </label>
+
+                    <input type="submit" class = 'btnz btn-success' value="submit" />
+                    <input type="submit" class = 'btnr btn-primary' value="next question" onclick="location.reload()" />
+                    <h5>Start game by clicking "submit", write answers starting with uppercase letters. If You dont know the answer - click "submit" for second time - You will have
+                    help on map. If You guess correctly, click "Next question".</h5>
+
+                    </fieldset>
+                    </form>
+                    <div class = content>
+
+                    <p class = guessing>
+                    Your answer will appear here
+                    </p>
+                    <p class="geoContent">
+                      The question will appear here
+                    </p>
+
+
+                      <div id="map"></div>
+                      <p>game made by Maciej Zaleski 7mz.pl</p>
+                    </div>
+                    </div>
+                  </div>
+
+
+              		</div>
+              		<div class="col-md-1">
+              		</div>
+              	</div>
+              </div>
+
+
+    <script src="jquery.min.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded",function(event){
+
+
+       const urlApi  = 'db.json';
+
+       function getData(){
+        $.ajax({
+             url: urlApi
+         })
+         .done(response => {
+          //console.log(response);
+          loadRegion(response);
+          //initMap(response);
+         })
+         .fail(error => {
+             console.log(error);
+         })
+
+        }
+
+         getData();
+
+
+
+    function loadRegion(res, lat, lng){
+      let rd = Math.floor((Math.random()*1000) + 1);
+      console.log(rd);
+      let tok = res.regionslist[rd];
+      
+      lat = res.regionslist[rd].CenterLatitude;
+      lng = res.regionslist[rd].CenterLongitude;
+
+      let base = tok.RegionName;
+      let outt = base.split(",");
+      let question = outt[0].trim();
+      console.log(question);
+      let answer = outt[1].trim();
+
+
+      $( "form" ).submit(function(e) {
+      e.preventDefault();
+      $('.geoContent').text(question);
+
+
+      $( ".guessing" ).text($('input:text').val()).show();
+
+      let res = $('.guessing').text();
+
+      console.log(res);
+      initialize(rd , lat , lng);
+      let count = 0;
+      let sum = 0;
+      if(res !== answer){
+        alert('not CORRECT');
+       //
+       count += 0;
+
+      }else{
+      alert('GREAT, HIT ON TEN !!');
+      count +=1;
+      localStorage.setItem(sum, count);
+      localStorage.getItem(sum, count);
+      }
+      //console.log(lat + "  "+ lng);
+      sum +=count*10;
+
+      $('.sumed').text(sum).show();
+      $('.moves').text(count).show();
+  });
+
+    }
+loadRegion();
+
+    var map;
+    function initialize(red, laat, lnng) {
+      var mapOptions = {
+        center: new google.maps.LatLng(1.290270, 1.851959),
+        zoom: 2,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
+      };
+      //let rd = Math.floor((Math.random()*1000) +1);
+      map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+    $( "form" ).submit(function( e ) {
+            e.preventDefault();
+      $.getJSON("db.json", function(json1) {
+        $.each(json1, function(key, data) {
+          var latLng = new google.maps.LatLng(laat, lnng);
+
+          // Creating a marker and putting it on the map
+          var marker = new google.maps.Marker({
+            position: latLng,
+            title: 'podpowiedź - to ten region'
+          });
+          marker.setMap(map);
+
+        });
+      });
+    });
+    }
+
+  });
+
+
+
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+     </script>
+     <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdo4rgqq8w-Mq5jhyNSzLt4P0ptnVM_q0&callback=initialize">
+     </script>
+<script src = bootstrap.min.js ></script>
+</body>
+</html>
